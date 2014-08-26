@@ -9,3 +9,5 @@ __pycache__
 .Python
 /share
 .DS_Store
+*.kate-swp
+
