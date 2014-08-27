@@ -1,12 +1,6 @@
 #import index
 #import pagerank as pr
-import re
-'''
-def getDomainFromURL(url):
-    return re.search('//(.*?)/', url).group(1)
-'''
-def compare(a):
-    return a['pagerank'] * a['number']
+import 
 
 result = {}
 query = ''
@@ -39,5 +33,5 @@ result = {
     'http://text-processing.com': { 'webpage': Webpage('text-processing.com', 'http://text-processing.com'), 'number': 10, 'pagerank': 2 }
 }
 '''
-result = sorted(result.values(), key=compare, reverse=True)
+result = sorted(result.values(), key=lambda x: x['pagerank'] * x['number'], reverse=True)
 return(i['webpage'] for i in result)
