@@ -2,8 +2,8 @@ from __future__ import absolute_import
 
 from bot.celery import app
 
+# don't remove 'add' as is serves as a (manual) test for celery
 
-# don't remove 'add' as is serves as a (manual) test for celary
 @app.task
 def add(x, y):
     return x + y
