@@ -3,5 +3,8 @@
 /lib
 /src
 /.idea
+/Scripts
 __pycache__
 *.pyc
+.Python
+.DS_Store
