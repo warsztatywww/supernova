@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from bot.celeryapp import app
+from bot.celery import app
 
 
 @app.task
