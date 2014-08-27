@@ -1,6 +1,6 @@
 # Supernova
 
-The best web search of the 10th WWW.
+> The best web search written in 3 days on [Summer Scientific Schools](http://warsztatywww.wikidot.com/en).
 
 ## Installation
 

@@ -1,11 +1,13 @@
-{% extends "gui/base.html" %}
-{% block title %}
-search
-{% endblock %}
-{% block menu %}
-    <li><a href="{% url 'search' %}">Search</a></li>
-    <li><a href="{% url 'submit' %}">Submit</a></li>
-{% endblock %}
-{% block content %}
-TODO search result
+{% extends "gui/search.html" %}
+{% block search_results %}
+    <h3>Search results for {{ query }}</h3>
+    <table class="table table-striped">
+        {% for result in results %}
+        <tr><td>
+            <h4>{{ result.title }}</h4>
+            <div><a href="{{ result.url }}">{{ result.url }}</a></div>
+            <p>{{ result.description }}</p>
+        </td></tr>
+        {% endfor %}
+    </table>
 {% endblock %}
