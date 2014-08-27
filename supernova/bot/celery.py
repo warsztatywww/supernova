@@ -5,7 +5,7 @@ from celery import Celery
 app = Celery('supernova',
              broker='amqp://guest@localhost//',
              backend='amqp://guest@localhost//',
-             include=['supernova.tasks'])
+             include=['bot.tasks'])
 
 # Optional configuration, see the application user guide.
 app.conf.update(
