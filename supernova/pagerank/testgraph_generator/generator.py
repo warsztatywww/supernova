@@ -8,7 +8,7 @@ class Generator:
   def generate (self):
     node_dict={}
     for i in range(1,self.__node_num+1):
-      node_dict[i]=[1, [random.randint(1,self.__node_num) for j in range(random.randint(0,self.__max_links))]]
+      node_dict[i]=[0, [random.randint(1,self.__node_num) for j in range(random.randint(0,self.__max_links))]]
     return node_dict
   def generate_text (self):
     d=self.generate()
