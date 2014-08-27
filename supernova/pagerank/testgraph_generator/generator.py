@@ -2,9 +2,9 @@ import random
 import math
 
 class Generator:
-  def __init__ (self, nodes):
+  def __init__ (self, nodes, edges):
     self.__node_num=nodes
-    self.__max_links=min(10,5*int(math.log2(self.__node_num)))
+    self.__max_links=edges
   def generate (self):
     node_dict={}
     for i in range(1,self.__node_num+1):
