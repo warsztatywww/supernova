@@ -3,8 +3,9 @@
 /lib
 /src
 /.idea
+/Scripts
 __pycache__
 *.pyc
 .Python
 /share
-
+.DS_Store
