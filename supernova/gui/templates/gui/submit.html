@@ -7,5 +7,16 @@ search
     <li class="active"><a href="{% url 'submit' %}">Submit</a></li>
 {% endblock %}
 {% block content %}
-TODO submit
+<form action="{% url 'submit' %}" method="post">
+    {% csrf_token %}
+    <div class="input-group">
+        <input type="text" class="form-control" name="submission" placeholder="Enter site name with http://">
+        <span class="input-group-btn">
+            <input type="submit" class="btn btn-default btn-primary" value="Submit" />
+        </span>
+    </div>
+    {% if msg %}
+    <div class="alert alert-info" role="alert">{{ msg }}</div>
+    {% endif %}
+</form>
 {% endblock %}

@@ -2,6 +2,8 @@ from django.http import Http404
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
 
+from bot.tasks import crawl_and_parse
+
 
 def search_view(request):
     return render_to_response(
@@ -41,7 +43,14 @@ def search_results_view(request, **kwargs):
 
 
 def submit_view(request):
+    context = {
+        'msg': None,
+    }
+    context.update(csrf(request))
+    if 'submission' in request.POST:
+        context['msg'] = 'Okay, we\'re indexing your site! Please be patient.'
+        crawl_and_parse(request.POST['submission'])
     return render_to_response(
         'gui/submit.html',
-        {},
+        context,
     )
