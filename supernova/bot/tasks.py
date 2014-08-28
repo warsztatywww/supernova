@@ -62,14 +62,14 @@ def crawl_and_parse(url):
 
     # save data
     print('Saving data to database ...')
-    domain = Domain.objects.create(name=domain_name, pagerank=0)
+    domain = Domain.objects.get_or_create(name=domain_name, pagerank=0)
     domain.save()
-    webpage = Webpage.objects.create(domain=domain,
-                                     path=uri_path,
-                                     title=title,
-                                     description=description,
-                                     keywords=keywords,
-                                     content=content)
+    webpage = Webpage.objects.get_or_create(domain=domain,
+                                            path=uri_path,
+                                            title=title,
+                                            description=description,
+                                            keywords=keywords,
+                                            content=content)
     webpage.save()
 
     # crawl rest of pages
