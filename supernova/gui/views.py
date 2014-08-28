@@ -1,6 +1,7 @@
 from django.http import Http404
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
+from accuracy.accuracy import accuracy
 
 from bot.tasks import crawl_and_parse
 
@@ -13,31 +14,20 @@ def search_view(request):
 
 
 def search_results_view(request, **kwargs):
+    query = request.GET['query']
+    webpages = accuracy(query) # returns a list of Webpage model objects
+    results = []
+    for i in webpages[:10]:
+        results.append({
+            'title': i.title,
+            'description': i.description,
+            'url': i.path
+            })
     return render_to_response(
         'gui/search_results.html',
         {
-            'query': request.GET['query'],
-            'results': [
-                {
-                    'title': 'How To Get Rich In One Day?',
-                    'description': 'Forex Bots With Neural Nets Deminary. This Week 30% Off! Have you ever imagined? '
-                                   'For Deeper Discounts Name Your Own Price.',
-                    'url': 'http://jaszczur.pl/',
-                },
-                {
-                    'title': 'Pyszotok',
-                    'description': 'Grigori Perelman, the Russian mathematician famous for solving '
-                                   'the notorious Poincare conjecture, shocked the world of mathematics '
-                                   'in 2006 by declining to accept the Fields Medal',
-                    'url': 'http://pyszotok.wordpress.com/',
-                },
-                {
-                    'title': 'Heroes of Might and Magic III / Heroes 3 - Age of Heroes',
-                    'description': 'Heroes of Might and Magic III is a turn-based strategic war game, set up '
-                                   'in a classical role-playing game Environment. It involves capturing and developing',
-                    'url': 'http://www.heroesofmightandmagic.com/heroes3/heroesofmightandmagic3iii.shtml',
-                },
-            ],
+            'query': query,
+            'results': results
         },
     )
 
