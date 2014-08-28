@@ -21,4 +21,4 @@ class Link(models.Model):
     start = models.ForeignKey(Webpage, related_name='link_start')
     end = models.ForeignKey(Webpage, related_name='link_end')
 
-post_save.connect(index_page.strona_do_zindeksowania, sender=Webpage, dispatch_uid="post_save_index")
+post_save.connect(index_page.page_to_index, sender=Webpage, dispatch_uid="post_save_index")
