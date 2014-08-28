@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import post_save
+from index.indexr import index_page
 
 
 class Domain(models.Model):
@@ -18,3 +20,5 @@ class Webpage(models.Model):
 class Link(models.Model):
     start = models.ForeignKey(Webpage, related_name='link_start')
     end = models.ForeignKey(Webpage, related_name='link_end')
+
+post_save.connect(index_page.strona_do_zindeksowania, sender=Webpage, dispatch_uid="post_save_index")
