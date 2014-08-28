@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 import re
 import redis
 
-from websites.models import Domain, Webpage
+from websites.models import Domain, Webpage, Link
 
 
 # Debug task
@@ -19,8 +19,9 @@ def add(x, y):
 
 # TODO must be finished by mrowqa
 @app.task
-def crawl_and_parse(url):
+def crawl_and_parse(url, refereer_webpage=None):
     print('Parsing {url} ...'.format(url=url))
+    print('Refereer: {0}'.format(refereer_webpage))
 
     # extract domain name and uri path from url
     url_parsed = re.match('^(?:https?://)?(?P<domain>[a-z0-9\.]+)(?P<uri>[^#\?]+)?.*$', url)
@@ -34,10 +35,15 @@ def crawl_and_parse(url):
 
     # connect to cache server and set some variables
     print('Connecting to Redis server ...')
-    redis_key = domain_name + uri_path
+    redis_key = 'crawler_' + domain_name + uri_path
     r_server = redis.Redis('localhost')
     if r_server.get(redis_key) == 'Cached':
         print('Already parsed!')
+        if refereer_webpage is None:
+            print('Adding refereer ...')
+            domain = Domain.objects.get(name=domain_name)
+            webpage = Webpage.objects.get(domain=domain, path=uri_path)
+            Link.objects.get_or_create(start=refereer_webpage, end=webpage)[0].save()
         return True
     r_server.setex(redis_key, 'Cached', timedelta(hours=1))
     r_server.incr('started_crawling')
@@ -76,6 +82,9 @@ def crawl_and_parse(url):
                                             keywords=keywords,
                                             content=content)[0]
     webpage.save()
+    Link.objects.filter(start=webpage).delete()
+    if refereer_webpage is not None:
+        Link.objects.get_or_create(start=refereer_webpage, end=webpage)[0].save()
 
     # crawl rest of pages
     print('Delaying other pages to crawl and parse ...')
@@ -88,7 +97,7 @@ def crawl_and_parse(url):
             url = domain_name + uri_path + ('/' if uri_path[-1] != '/' else '') + url
         if not url.startswith('http://'):
             url = 'http://' + url
-        crawl_and_parse.delay(url)
+        crawl_and_parse.delay(url, webpage)
 
     r_server.incr('ended_crawling')
     print('Done.')
