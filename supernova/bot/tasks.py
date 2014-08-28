@@ -127,7 +127,7 @@ def crawl_and_parse(url, referrer_webpage=None):
     webpage.save()
 
     # Refresh link list
-    #Link.objects.filter(start=webpage).delete()
+    Link.objects.filter(start=webpage).delete()
     # FIXME force line above to work correctly!
 
     # crawl rest of pages
