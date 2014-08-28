@@ -40,3 +40,14 @@ To clear pending tasks from queue:
 
     celery purge
 
+## nltk
+
+Install Punkt Tokenizer Models to nltk - uses by index
+
+    $ python -m nltk.downloader punkt
+	
+	OR GUI
+	$ import nltk
+	$ nltk.download()
+	
+	http://www.nltk.org/data.html
