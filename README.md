@@ -23,7 +23,7 @@
 ## Celery
 
     $ rabbitmq-server
-    $ celery -A bot worker -l info
+    $ celery -A supernova worker --loglevel=debug
 
 To test:
 
@@ -35,3 +35,8 @@ To test:
     'SUCCESS'
     >>> x.get()
     10
+
+To clear pending tasks from queue:
+
+    celery purge
+
