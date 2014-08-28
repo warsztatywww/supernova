@@ -12,6 +12,7 @@ r_server = redis.Redis(redis_server_ip)
 stemmer = snowball.EnglishStemmer()
 exclude = set(string.punctuation)
 
+
 def strona_do_zindeksowania(sender, instance, **kwargs):
     """
     Przyjmuje obiekt Webpage i wyciąga z niego słowa do indeksu
