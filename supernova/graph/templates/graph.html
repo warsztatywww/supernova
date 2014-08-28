@@ -10,8 +10,9 @@ graph
 {% endblock %}
 
 {% block menu %}
-    <li class="active"><a href="{% url 'search' %}">Search</a></li>
+    <li><a href="{% url 'search' %}">Search</a></li>
     <li><a href="{% url 'submit' %}">Submit</a></li>
+    <li class="active"><a href="{% url 'graph' %}">Graph</a></li>
 {% endblock %}
 
 {% block content %}

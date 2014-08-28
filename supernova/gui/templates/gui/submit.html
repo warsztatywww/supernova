@@ -5,6 +5,7 @@ search
 {% block menu %}
     <li><a href="{% url 'search' %}">Search</a></li>
     <li class="active"><a href="{% url 'submit' %}">Submit</a></li>
+    <li><a href="{% url 'graph' %}">Graph</a></li>
 {% endblock %}
 {% block content %}
 <form action="{% url 'submit' %}" method="post">
