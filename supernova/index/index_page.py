@@ -25,10 +25,10 @@ def page_to_index(sender, instance, **kwargs):
     lista_ujednoliconych_slow = [stemmer.stem(i) for i in lista_slow_strony]
     slownik_wystopien = Counter(lista_ujednoliconych_slow)
     for s in slownik_wystopien.keys():
-        dodaj_lub_uaktualnij_slowo_w_bazie(s, instance.pk)
+        add_or_update_word(s, instance.pk)
 
 
-def dodaj_lub_uaktualnij_slowo_w_bazie(slowo, web_pk):
+def add_or_update_word(slowo, web_pk):
     if r_server.exists(slowo):
         lista_wystapien = str(r_server.get(slowo).decode()).split(",")
         if not lista_wystapien.__contains__(str(web_pk)):
