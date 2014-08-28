@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import post_save
+from index import index_page
 
 
 class Domain(models.Model):
@@ -24,3 +26,6 @@ class Link(models.Model):
     end = models.ForeignKey(Webpage, related_name='link_end')
     def __str__ (self):
         return "<Link from {} to {}>".format(self.start.webpage, self.end.webpage)
+
+		
+post_save.connect(index_page.page_to_index, sender=Webpage, dispatch_uid="post_save_index")
