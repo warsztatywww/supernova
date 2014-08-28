@@ -1,4 +1,5 @@
-import index
+from websites import models
+import index.func as index
 import nltk
 import re
 import string
@@ -14,7 +15,7 @@ def stringToList(a, splitString):
 
     :return: list of stemmed words from `a`
     '''
-    a = "".join(l for l in a if l not in string.punctuation).split(splitCharacter)
+    a = "".join(l for l in a if l not in string.punctuation).split(splitString)
     return [stemmer.stem(i) for i in a if i != '']
 
 def calculatePoints(query, stringToCheck, splitString, rate):
@@ -60,18 +61,19 @@ def accuracy(query):
     query = stringToList(query, ' ')
     result = {}
     for word in query:
-        indexedResult = index.get(word)
-        for l in indexedResult:
+        indexedResult = index.szukaj_slowa(word)
+        for webpagePK, points in indexedResult:
             # correct assuming that l[0] is a Webpage model object and l[1] is a number of occurence of that word
-            if l[0].path in result:
-                result[ l[0].path ]['number'] += l[1]
+            webpage = models.Webpage.objects.get(pk=webpagePK)
+            if webpagePK in result:
+                result[ webpagePK ]['number'] += points
             else:
-                result[ l[0].path ] = { 'webpage': l[0], 'number': l[1] }
+                result[ webpagePK ] = { 'webpage': webpage, 'number': points }
 
-    for l in result:
-        l['pagerank'] = l.webpage.domain.pagerank
-        l['titlePoints'] = calculatePoints(query, l.webpage.title, ' ', titleRate)
-        l['keywordPoints'] = calculatePoints(query, l.webpage.keywords, ',', keywordRate)
+    for i in result:
+        i['pagerank'] = i['webpage'].domain.pagerank
+        i['titlePoints'] = calculatePoints(query, i['webpage'].title, ' ', titleRate)
+        i['keywordPoints'] = calculatePoints(query, i['webpage'].keywords, ',', keywordRate)
 
 
     compare = lambda x: x['pagerank'] * x['number'] * x['titlePoints'] * x['keywordPoints']
