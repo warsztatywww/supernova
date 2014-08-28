@@ -32,7 +32,7 @@ def crawl_and_parse(url):
     except IndexError:
         uri_path = '/'
 
-    # connect to cache server
+    # connect to cache server and set some variables
     print('Connecting to Redis server ...')
     redis_key = domain_name + uri_path
     r_server = redis.Redis('localhost')
@@ -40,6 +40,11 @@ def crawl_and_parse(url):
         print('Already parsed!')
         return True
     r_server.setex(redis_key, 'Cached', timedelta(hours=1))
+    r_server.incr('started_crawling')
+
+    print('Parse statistics (ended / started): {0} / {1}'.format(
+                                                    r_server.get('ended_crawling'),
+                                                    r_server.get('started_crawling')))
 
     # download data
     print('Downloading page ...')
@@ -62,14 +67,14 @@ def crawl_and_parse(url):
 
     # save data
     print('Saving data to database ...')
-    domain = Domain.objects.get_or_create(name=domain_name, pagerank=0)
+    domain = Domain.objects.get_or_create(name=domain_name, pagerank=0)[0]
     domain.save()
     webpage = Webpage.objects.get_or_create(domain=domain,
                                             path=uri_path,
                                             title=title,
                                             description=description,
                                             keywords=keywords,
-                                            content=content)
+                                            content=content)[0]
     webpage.save()
 
     # crawl rest of pages
@@ -85,5 +90,6 @@ def crawl_and_parse(url):
             url = 'http://' + url
         crawl_and_parse.delay(url)
 
+    r_server.incr('ended_crawling')
     print('Done.')
     return True
