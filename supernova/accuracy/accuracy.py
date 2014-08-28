@@ -62,13 +62,14 @@ def accuracy(query):
     result = {}
     for word in query:
         indexedResult = index.szukaj_slowa(word)
-        for webpagePK, points in indexedResult:
-            # correct assuming that l[0] is a Webpage model object and l[1] is a number of occurence of that word
-            webpage = models.Webpage.objects.get(pk=webpagePK)
-            if webpagePK in result:
-                result[ webpagePK ]['number'] += points
-            else:
-                result[ webpagePK ] = { 'webpage': webpage, 'number': points }
+        if indexedResult: # it may be False if there are no webpages containing a certain word
+            for webpagePK, points in indexedResult:
+                # correct assuming that l[0] is a Webpage model object and l[1] is a number of occurence of that word
+                webpage = models.Webpage.objects.get(pk=webpagePK)
+                if webpagePK in result:
+                    result[ webpagePK ]['number'] += points
+                else:
+                    result[ webpagePK ] = { 'webpage': webpage, 'number': points }
 
     for i in result:
         i['pagerank'] = i['webpage'].domain.pagerank
