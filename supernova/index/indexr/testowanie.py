@@ -1,6 +1,6 @@
 __author__ = 'Kamil'
 from websites.models import *
-from .func import *
+from index.func import *
 
 
 def stworz_domene(nazwa="domena"):
