@@ -13,7 +13,7 @@ stemmer = snowball.EnglishStemmer()
 exclude = set(string.punctuation)
 
 
-def strona_do_zindeksowania(sender, instance, **kwargs):
+def page_to_index(sender, instance, **kwargs):
     """
     Przyjmuje obiekt Webpage i wyciąga z niego słowa do indeksu
     :param webpage:

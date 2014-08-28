@@ -27,5 +27,5 @@ class Link(models.Model):
     def __str__ (self):
         return "<Link from {} to {}>".format(self.start.webpage, self.end.webpage)
 
-
-post_save.connect(index_page.strona_do_zindeksowania, sender=Webpage, dispatch_uid="post_save_index")
+		
+post_save.connect(index_page.page_to_index, sender=Webpage, dispatch_uid="post_save_index")
