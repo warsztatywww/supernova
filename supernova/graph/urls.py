@@ -4,6 +4,6 @@ from .views import *
 
 urlpatterns = patterns(
     '',
-    url('^graph$', graph_view, name='graph'),
-    url('^graph.json$', graph_json, name='graph_json'),
+    url(r'^', graph_view, name='graph'),
+    url(r'^json$', graph_json, name='graph_json'),
 )

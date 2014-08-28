@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
-from supernova.websites.models import Domain, Webpage
+from websites.models import Domain, Webpage
 import json
 
 def graph_view(request):

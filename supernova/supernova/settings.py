@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'accuracy',
     'bot',
     'gui',
+    'graph',
     'index',
     'pagerank',
     'supernova',
