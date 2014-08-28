@@ -25,7 +25,8 @@ class Link(models.Model):
     start = models.ForeignKey(Webpage, related_name='link_start')
     end = models.ForeignKey(Webpage, related_name='link_end')
     def __str__ (self):
-        return "<Link from {} to {}>".format(self.start.webpage, self.end.webpage)
+        return "<Link from {} to {}>".format(self.start, self.end)
 
 		
 post_save.connect(index_page.page_to_index, sender=Webpage, dispatch_uid="post_save_index")
+
