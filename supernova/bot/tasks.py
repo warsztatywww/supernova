@@ -1,13 +1,14 @@
 from __future__ import absolute_import
 
-
-from bot.celery import app
+from supernova.celery import app
 from datetime import timedelta
 from http.client import BadStatusLine
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import re
 import redis
+
+from websites.models import Domain, Webpage
 
 
 # Debug task
@@ -19,8 +20,6 @@ def add(x, y):
 # TODO must be finished by mrowqa
 @app.task
 def crawl_and_parse(url):
-    from websites.models import Domain, Webpage
-
     print('Parsing {url} ...'.format(url=url))
 
     # extract domain name and uri path from url
