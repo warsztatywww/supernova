@@ -9,7 +9,8 @@ from .config import *
 
 
 r_server = redis.Redis(redis_server_ip)
-
+stemmer = snowball.EnglishStemmer()
+exclude = set(string.punctuation)
 
 def strona_do_zindeksowania(sender, instance, **kwargs):
     """
@@ -18,10 +19,8 @@ def strona_do_zindeksowania(sender, instance, **kwargs):
     :return:
     """
     zawartosc = instance.content
-    exclude = set(string.punctuation)
     zawartosc = ''.join(ch for ch in zawartosc if ch not in exclude)
     lista_slow_strony = word_tokenize(zawartosc)
-    stemmer = snowball.EnglishStemmer()
     lista_ujednoliconych_slow = [stemmer.stem(i) for i in lista_slow_strony]
     slownik_wystopien = Counter(lista_ujednoliconych_slow)
     for s in slownik_wystopien.keys():
