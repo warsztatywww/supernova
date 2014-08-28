@@ -40,14 +40,12 @@ To clear pending tasks from queue:
 
     celery purge
 
-## nltk
 
-Install Punkt Tokenizer Models to nltk - uses by index
+## Pagerank
 
-    $ python -m nltk.downloader punkt
-	
-	OR GUI
-	$ import nltk
-	$ nltk.download()
-	
-	http://www.nltk.org/data.html
+Go to pagerank directory and compile C++ pagerank calculator:
+
+    cd pagerank
+    make
+
+
