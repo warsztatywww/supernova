@@ -79,4 +79,4 @@ def accuracy(query):
 
     compare = lambda x: x['pagerank'] * x['number'] * x['titlePoints'] * x['keywordPoints']
     result = sorted(result.values(), key=compare, reverse=True)
-    return(i['webpage'] for i in result)
+    return([i['webpage'] for i in result])
