@@ -13,11 +13,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Domain',
             fields=[
-<<<<<<< HEAD
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-=======
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
->>>>>>> działający redis
                 ('name', models.CharField(max_length=255)),
                 ('pagerank', models.FloatField()),
             ],
@@ -28,11 +24,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Link',
             fields=[
-<<<<<<< HEAD
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-=======
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
->>>>>>> działający redis
             ],
             options={
             },
@@ -41,11 +33,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Webpage',
             fields=[
-<<<<<<< HEAD
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-=======
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
->>>>>>> działający redis
                 ('path', models.CharField(max_length=4095)),
                 ('title', models.CharField(max_length=255)),
                 ('description', models.CharField(max_length=1023)),
@@ -60,21 +48,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='link',
             name='end',
-<<<<<<< HEAD
             field=models.ForeignKey(related_name='link_end', to='websites.Webpage'),
-=======
-            field=models.ForeignKey(to='websites.Webpage', related_name='link_end'),
->>>>>>> działający redis
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='link',
             name='start',
-<<<<<<< HEAD
             field=models.ForeignKey(related_name='link_start', to='websites.Webpage'),
-=======
-            field=models.ForeignKey(to='websites.Webpage', related_name='link_start'),
->>>>>>> działający redis
             preserve_default=True,
         ),
     ]

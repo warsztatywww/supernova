@@ -1,6 +1,6 @@
+import nltk
 from websites import models
 import index.func as index
-import nltk
 import re
 import string
 
@@ -71,7 +71,7 @@ def accuracy(query):
                 else:
                     result[ webpagePK ] = { 'webpage': webpage, 'number': points }
 
-    for i in result:
+    for i in result.values():
         i['pagerank'] = i['webpage'].domain.pagerank
         i['titlePoints'] = calculatePoints(query, i['webpage'].title, ' ', titleRate)
         i['keywordPoints'] = calculatePoints(query, i['webpage'].keywords, ',', keywordRate)
@@ -80,3 +80,4 @@ def accuracy(query):
     compare = lambda x: x['pagerank'] * x['number'] * x['titlePoints'] * x['keywordPoints']
     result = sorted(result.values(), key=compare, reverse=True)
     return([i['webpage'] for i in result])
+

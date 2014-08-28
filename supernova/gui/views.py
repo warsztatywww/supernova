@@ -21,7 +21,7 @@ def search_results_view(request, **kwargs):
         results.append({
             'title': i.title,
             'description': i.description,
-            'url': i.path
+            'url': 'http://{}{}'.format(i.domain.name, i.path),
             })
     return render_to_response(
         'gui/search_results.html',

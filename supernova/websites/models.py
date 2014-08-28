@@ -5,7 +5,7 @@ from index import index_page
 
 class Domain(models.Model):
     name = models.CharField(max_length=255)
-    pagerank = models.FloatField()
+    pagerank = models.FloatField(default=0)
     def __str__ (self):
         return "<Domain {} with pagerank {}>".format(self.name, self.pagerank)
 

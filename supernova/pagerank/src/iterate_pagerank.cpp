@@ -28,7 +28,8 @@ int main ()
     for (int j=0; j<k; j++)
     {
       scanf("%d", &a);
-      gr[w].push_back(a);
+      if (w!=a)
+          gr[w].push_back(a);
     }
   }
   

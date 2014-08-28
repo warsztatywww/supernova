@@ -11,6 +11,8 @@ import redis
 from websites.models import Domain, Webpage, Link
 
 
+CACHED = b'Cached'
+
 # Debug task
 @app.task
 def add(x, y):
@@ -34,7 +36,8 @@ def extract_domain_and_path(url):
 
 
 def get_domain_and_webpage_models(domain_name, uri_path):
-    domain = Domain.objects.get_or_create(name=domain_name, pagerank=0)[0]
+    domain = Domain.objects.get_or_create(name=domain_name)[0]
+    domain.pagerank = 0
     domain.save()
     webpage = Webpage.objects.get_or_create(domain=domain, path=uri_path)[0]
     webpage.save()
@@ -85,7 +88,7 @@ def crawl_links(urls, domain_name, uri_path, webpage):
 
         url_pref_len = len('https://')
         redis_key = get_redis_key(url[url_pref_len:])
-        if r_server.get(redis_key) != 'Cached':
+        if r_server.get(redis_key) != CACHED:
             crawl_and_parse.delay(url, webpage)
         else:
             _, son_webpage = get_domain_and_webpage_models(extract_domain_and_path(url))
@@ -103,10 +106,10 @@ def crawl_and_parse(url, referrer_webpage=None):
 
     # connect to cache server and set some variables
     redis_key = get_redis_key(domain_name + uri_path)
-    if r_server.get(redis_key) == 'Cached':
+    if r_server.get(redis_key) == CACHED:
         print('Already parsed!')
         return True
-    r_server.setex(redis_key, 'Cached', timedelta(hours=1))
+    r_server.setex(redis_key, CACHED, timedelta(hours=1))
     r_server.incr('started_crawling')
 
     print('Parse statistics (ended / started): {0} / {1}'.format(
