@@ -6,5 +6,5 @@ urlpatterns = patterns(
     '',
     url('^$', search_view, name='search'),
     url('^submit$', submit_view, name='submit'),
-    url('^search/(?P<phrase>.*)$', search_results_view, name='search_results'),
+    url('^search$', search_results_view, name='search_results'),
 )

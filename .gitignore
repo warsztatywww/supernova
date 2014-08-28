@@ -7,4 +7,5 @@ __pycache__
 *.pyc
 *.kate-swp
 .Python
-.DS_Store
+/share
+

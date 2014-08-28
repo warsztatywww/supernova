@@ -7,5 +7,14 @@ search
     <li><a href="{% url 'submit' %}">Submit</a></li>
 {% endblock %}
 {% block content %}
-TODO search
+<form action="{% url 'search_results' %}" method="get">
+    <div class="input-group">
+        <input type="text" class="form-control" name="query" placeholder="Enter query to search..."
+               {% if query %}value="{{ query }}"{% endif %}>
+        <span class="input-group-btn">
+            <input type="submit" class="btn btn-default btn-primary" value="Search" />
+        </span>
+    </div><!-- /input-group -->
+    {% block search_results %}{% endblock %}
+</form>
 {% endblock %}
